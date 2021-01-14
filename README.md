@@ -1,10 +1,14 @@
-# Raspberry Pi home server setup as Code.
+# (Raspberry Pi) Home Server Setup as Code
 
-Because the server is using a microSD card one focus is to minimize disk read/write activity. Therefore I am using a lot of tmpfs devices where possible.
+Using the Docker provider for Terraform to deploy Docker Infrastructure (Images, Containers, Networks, Volumes).
+
+![](images/docker-terraform-raspi-lab.png)
+
+Because my/the server is using a microSD card one focus is to minimize disk read/write activity. Therefore, a lot of tmpfs devices are used where possible.
 
 I am also using 
-* <https://github.com/bobafetthotmail/folder2ram> to further reduce disk read/writes of the OS and
-* <https://github.com/cloudalchemy/ansible-node-exporter> to install the node exporter.
+* <https://github.com/bobafetthotmail/folder2ram> to further reduce disk read/writes of the OS
+* <https://github.com/cloudalchemy/ansible-node-exporter> to install the Node Exporter for gettng Prometheus Metrics
 
 ## Instructions
 
