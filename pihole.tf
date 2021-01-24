@@ -14,6 +14,10 @@ output "pihole_password" {
   value = random_password.pihole_password.result
 }
 
+resource "docker_volume" "pihole" {
+  name   = "pihole_data"
+  driver = "local"
+}
 
 resource "docker_container" "pihole" {
   name     = "pihole"
@@ -27,7 +31,6 @@ resource "docker_container" "pihole" {
     ["WEBPASSWORD=${random_password.pihole_password.result}"]
   )
 
-
   healthcheck {
     interval     = "0s"
     retries      = 0
@@ -40,9 +43,9 @@ resource "docker_container" "pihole" {
 
   }
   mounts {
-    target    = "/etc/pihole/adlists.list"
-    source    = var.pihole_path_adlists_list
-    type      = "bind"
+    target    = "/etc/pihole/"
+    source    = docker_volume.pihole.name
+    type      = "volume"
     read_only = false
   }
 
