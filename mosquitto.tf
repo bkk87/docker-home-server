@@ -17,10 +17,11 @@ resource "docker_volume" "mosquitto_data" {
 }
 
 resource "docker_container" "mosquitto" {
-  name    = "mosquitto"
-  image   = docker_image.mosquitto.latest
-  restart = "unless-stopped"
-  start   = true
+  name     = "mosquitto"
+  image    = docker_image.mosquitto.name
+  restart  = "unless-stopped"
+  must_run = false
+  start    = true
   mounts {
     target    = "/mosquitto/config/mosquitto.conf"
     source    = var.path_mosquitto_conf
@@ -38,12 +39,12 @@ resource "docker_container" "mosquitto" {
     source = docker_volume.mosquitto_data.name
   }
 
-  ports {
-    internal = 1883
-    external = 1883
-    ip       = "0.0.0.0"
-    protocol = "tcp"
-  }
+  # ports {
+  #   internal = 1883
+  #   external = 1883
+  #   ip       = "0.0.0.0"
+  #   protocol = "tcp"
+  # }
 
   networks_advanced {
     name = docker_network.private_network.name

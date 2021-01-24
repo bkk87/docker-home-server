@@ -13,7 +13,7 @@ resource "docker_volume" "portainer_data" {
 
 resource "docker_container" "portainer" {
   name        = "portainer"
-  image       = docker_image.portainer.latest
+  image       = docker_image.portainer.name
   restart     = "unless-stopped"
   start       = true
   working_dir = "/"

@@ -12,10 +12,11 @@ resource "docker_volume" "homeassistant_data" {
 }
 
 resource "docker_container" "homeassistant" {
-  name    = "homeassistant"
-  image   = docker_image.homeassistant.latest
-  restart = "unless-stopped"
-  start   = true
+  name     = "homeassistant"
+  image    = docker_image.homeassistant.name
+  restart  = "unless-stopped"
+  must_run = false
+  start    = true
   mounts {
     target    = "/etc/localtime"
     source    = "/etc/localtime"

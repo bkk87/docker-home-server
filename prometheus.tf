@@ -20,7 +20,7 @@ resource "docker_volume" "prometheus_data" {
 
 resource "docker_container" "prometheus" {
   name        = "prometheus"
-  image       = docker_image.prometheus.latest
+  image       = docker_image.prometheus.name
   restart     = "unless-stopped"
   start       = true
   user        = "nobody"

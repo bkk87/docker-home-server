@@ -1,7 +1,7 @@
 # provider
 
-variable "docker_connect_uri" {
-  default     = "ssh://pi"
+variable "docker_connect_host" {
+  default     = "pi"
   description = "connect string to the (remote) docker daemon"
 }
 

@@ -13,7 +13,7 @@ resource "docker_volume" "syncthing_data" {
 
 resource "docker_container" "syncthing" {
   name    = "syncthing"
-  image   = docker_image.syncthing.latest
+  image   = docker_image.syncthing.name
   restart = "unless-stopped"
   start   = true
   env     = ["STGUIADDRESS=0.0.0.0:8384"]

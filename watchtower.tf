@@ -8,7 +8,7 @@ resource "docker_image" "watchtower" {
 
 resource "docker_container" "watchtower" {
   name  = "watchtower"
-  image = docker_image.watchtower.latest
+  image = docker_image.watchtower.name
   env = [
     "WATCHTOWER_CLEANUP=true",
     "WATCHTOWER_POLL_INTERVAL=86400",

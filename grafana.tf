@@ -13,7 +13,7 @@ resource "docker_volume" "grafana" {
 
 resource "docker_container" "grafana" {
   name  = "grafana"
-  image = docker_image.grafana.latest
+  image = docker_image.grafana.name
   env = [
     "GF_PATHS_CONFIG=/etc/grafana/grafana.ini",
     "GF_PATHS_DATA=/var/lib/grafana",

@@ -17,7 +17,7 @@ output "pihole_password" {
 
 resource "docker_container" "pihole" {
   name     = "pihole"
-  image    = docker_image.pihole.latest
+  image    = docker_image.pihole.name
   restart  = "unless-stopped"
   start    = true
   dns      = ["1.1.1.1", "127.0.0.1"]
