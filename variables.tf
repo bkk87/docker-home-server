@@ -1,18 +1,11 @@
 # provider
 
-variable "docker_connect_host" {
+variable "docker_connect_hostname" {
   default     = "pi"
-  description = "connect string to the (remote) docker daemon"
+  description = "hostname of the (remote) docker daemon"
 }
 
 # pihole
-
-variable "pihole_path_adlists_list" {
-  type        = string
-  default     = "/home/pi/pihole/adlists.list"
-  description = "path to the file which is used as a volume bind"
-}
-
 variable "pihole_env_list" {
   type = list(string)
   default = [

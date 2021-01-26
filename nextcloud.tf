@@ -23,7 +23,7 @@ resource "docker_container" "nextcloud" {
   name    = "nextcloud"
   image   = docker_image.nextcloud.name
   restart = "unless-stopped"
-  env     = ["NEXTCLOUD_ADMIN_USER=${var.nextcloud_admin_username}", "NEXTCLOUD_ADMIN_PASSWORD=${random_password.nextcloud_password.result}", "NEXTCLOUD_TRUSTED_DOMAINS=${var.external_domain_name}"]
+  env     = ["NEXTCLOUD_ADMIN_USER=${var.nextcloud_admin_username}", "NEXTCLOUD_ADMIN_PASSWORD=${random_password.nextcloud_password.result}", "NEXTCLOUD_TRUSTED_DOMAINS=${var.duckdns_domain_name}"]
 
   mounts {
     target = "/var/www/html"
@@ -56,7 +56,7 @@ resource "docker_container" "nextcloud" {
   }
   labels {
     label = "traefik.http.routers.web-secure.rule"
-    value = "Host(`${var.external_domain_name}`)"
+    value = "Host(`${var.duckdns_domain_name}`)"
   }
   labels {
     label = "traefik.http.routers.web-secure.service"
@@ -80,7 +80,7 @@ resource "docker_container" "nextcloud" {
   }
   labels {
     label = "traefik.http.routers.web.rule"
-    value = "Host(`${var.external_domain_name}`)"
+    value = "Host(`${var.duckdns_domain_name}`)"
   }
   labels {
     label = "traefik.http.middlewares.https-redirect.redirectscheme.scheme"

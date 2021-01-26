@@ -12,5 +12,5 @@ terraform {
 
 # Configure the docker provider
 provider "docker" {
-  host = "ssh://${var.docker_connect_host}"
+  host = "ssh://${var.docker_connect_hostname}"
 }
