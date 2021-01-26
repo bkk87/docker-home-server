@@ -39,12 +39,12 @@ resource "docker_container" "mosquitto" {
     source = docker_volume.mosquitto_data.name
   }
 
-  # ports {
-  #   internal = 1883
-  #   external = 1883
-  #   ip       = "0.0.0.0"
-  #   protocol = "tcp"
-  # }
+  ports {
+    internal = 1883
+    external = 1883
+    ip       = "0.0.0.0"
+    protocol = "tcp"
+  }
 
   networks_advanced {
     name = docker_network.private_network.name

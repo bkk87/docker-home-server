@@ -8,17 +8,17 @@ resource "docker_image" "whoami" {
 
 resource "docker_container" "whoami" {
   name    = "whoami"
-  image   = docker_image.whoami.latest
+  image   = docker_image.whoami.name
   restart = "unless-stopped"
   start   = true
-  ports {
-    internal = 80
-    external = 82
-    ip       = "0.0.0.0"
-    protocol = "tcp"
-  }
+  #   ports {
+  #     internal = 80
+  #     external = 82
+  #     ip       = "0.0.0.0"
+  #     protocol = "tcp"
+  #   }
   networks_advanced {
-    name = docker_network.public_network.name
+    name = docker_network.private_network.name
   }
   ipc_mode = "private"
 }

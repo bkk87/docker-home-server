@@ -45,4 +45,34 @@ variable "path_mosquitto_conf" {
   description = "path to the file which is used as a volume bind"
 }
 
+# traefik
+
+variable "user_digest_auth" {
+  type        = string
+  description = "htdigest -c htdigestfile traefik myusername"
+}
+variable "internal_domain_name" {
+  type    = string
+  default = "myserver.fritz.box"
+}
+variable "duckdns_domain_name" {
+  type    = string
+  default = "myserver.duckdns.org"
+}
+
+variable "duckdns_domain_token" {
+  type    = string
+  default = "token for your duckdns domain so traefik can generate a letsencrypt certificate"
+}
+variable "letsencrypt_email" {
+  type    = string
+  default = "myemail@domain.com"
+}
+
+# nextcloud
+
+variable "nextcloud_admin_username" {
+  type    = string
+  default = "admin"
+}
 
