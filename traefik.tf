@@ -6,14 +6,9 @@ resource "docker_image" "traefik" {
   keep_locally = true
 }
 
-resource "docker_volume" "traefik_data" {
-  name   = "traefik_data"
+resource "docker_volume" "traefik_data_letsencrypt" {
+  name   = "traefik_data_letsencrypt"
   driver = "local"
-  driver_opts = {
-    "type"   = "tmpfs",
-    "device" = "tmpfs",
-    "o"      = "size=50m"
-  }
 }
 
 resource "docker_container" "traefik" {
@@ -22,18 +17,17 @@ resource "docker_container" "traefik" {
   restart  = "unless-stopped"
   must_run = false
   start    = true
-  env = ["DUCKDNS_TOKEN=${var.duckdns_domain_token}"]
+  dns      = ["1.1.1.1"]
   command = [
     "--certificatesresolvers.myresolver.acme.email=${var.letsencrypt_email}",
-    "--certificatesresolvers.myresolver.acme.storage=/etc/traefik/acme/acme.json",
-    "--certificatesresolvers.myresolver.acme.dnschallenge.provider=duckdns",
-    "--certificatesresolvers.myresolver.acme.dnschallenge.resolvers=1.1.1.1:53",
+    "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json",
+    "--certificatesresolvers.myresolver.acme.tlschallenge=true",
     "--providers.docker.exposedByDefault=false",
     "--api=true",
     "--api.dashboard=true",
     "--providers.docker",
     "--providers.docker.network=${docker_network.public_network.name}",
-    "--log.level=WARN",
+    "--log.level=DEBUG",
     "--entryPoints.http.address=:80",
     "--entryPoints.https.address=:443"
   ]
@@ -44,9 +38,9 @@ resource "docker_container" "traefik" {
     read_only = true
   }
   mounts {
-    target = "/etc/traefik/acme"
+    target = "/letsencrypt"
     type   = "volume"
-    source = docker_volume.traefik_data.name
+    source = docker_volume.traefik_data_letsencrypt.name
   }
 
   ports {

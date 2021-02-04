@@ -23,7 +23,7 @@ resource "docker_container" "nextcloud" {
   name    = "nextcloud"
   image   = docker_image.nextcloud.name
   restart = "unless-stopped"
-  env     = ["NEXTCLOUD_ADMIN_USER=${var.nextcloud_admin_username}", "NEXTCLOUD_ADMIN_PASSWORD=${random_password.nextcloud_password.result}", "NEXTCLOUD_TRUSTED_DOMAINS=${var.duckdns_domain_name}"]
+  env     = ["SQLITE_DATABASE=nextcloud", "NEXTCLOUD_ADMIN_USER=${var.nextcloud_admin_username}", "NEXTCLOUD_ADMIN_PASSWORD=${random_password.nextcloud_password.result}", "NEXTCLOUD_TRUSTED_DOMAINS=${var.duckdns_domain_name}"]
 
   mounts {
     target = "/var/www/html"
@@ -52,7 +52,7 @@ resource "docker_container" "nextcloud" {
   }
   labels {
     label = "traefik.http.routers.web-secure.middlewares"
-    value = "ratelimit@docker,auth@docker,nc-rep@docker,nc-header@docker"
+    value = "ratelimit@docker,nc-rep@docker,nc-header@docker,auth@docker"
   }
   labels {
     label = "traefik.http.routers.web-secure.rule"

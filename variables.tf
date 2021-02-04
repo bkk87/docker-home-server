@@ -52,11 +52,6 @@ variable "duckdns_domain_name" {
   type    = string
   default = "myserver.duckdns.org"
 }
-
-variable "duckdns_domain_token" {
-  type    = string
-  default = "token for your duckdns domain so traefik can generate a letsencrypt certificate"
-}
 variable "letsencrypt_email" {
   type    = string
   default = "myemail@domain.com"
