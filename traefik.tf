@@ -29,7 +29,10 @@ resource "docker_container" "traefik" {
     "--providers.docker.network=${docker_network.public_network.name}",
     "--log.level=DEBUG",
     "--entryPoints.http.address=:80",
-    "--entryPoints.https.address=:443"
+    "--entryPoints.https.address=:443",
+    "--metrics.prometheus=true",
+    "--entryPoints.metrics.address=:8082",
+    "--metrics.prometheus.entryPoint=metrics"
   ]
   mounts {
     target    = "/var/run/docker.sock"
