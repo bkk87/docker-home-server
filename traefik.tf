@@ -25,14 +25,14 @@ resource "docker_container" "traefik" {
     "--providers.docker.exposedByDefault=false",
     "--api=true",
     "--api.dashboard=true",
+    "--metrics.prometheus=true",
+    "--metrics.prometheus.manualrouting=true",
     "--providers.docker",
     "--providers.docker.network=${docker_network.public_network.name}",
     "--log.level=DEBUG",
     "--entryPoints.http.address=:80",
     "--entryPoints.https.address=:443",
-    "--metrics.prometheus=true",
-    "--entryPoints.metrics.address=:8082",
-    "--metrics.prometheus.entryPoint=metrics"
+    "--entryPoints.internal.address=:8082"
   ]
   mounts {
     target    = "/var/run/docker.sock"
@@ -55,6 +55,13 @@ resource "docker_container" "traefik" {
   ports {
     internal = 443
     external = 443
+    ip       = "0.0.0.0"
+    protocol = "tcp"
+  }
+
+  ports {
+    internal = 8082
+    external = 8082
     ip       = "0.0.0.0"
     protocol = "tcp"
   }
@@ -82,28 +89,52 @@ resource "docker_container" "traefik" {
     value = "50"
   }
   labels {
-    label = "traefik.http.routers.api.middlewares"
-    value = "auth@docker"
+    label = "traefik.http.routers.api.entrypoints"
+    value = "internal"
   }
   labels {
-    label = "traefik.http.routers.api.rule"
-    value = "Host(`${var.internal_domain_name}`) && (PathPrefix(`/api`))"
+    label = "traefik.http.routers.prometheus.entrypoints"
+    value = "internal"
+  }
+  labels {
+    label = "traefik.http.routers.dashboard.entrypoints"
+    value = "internal"
+  }
+  labels {
+    label = "traefik.http.routers.api.middlewares"
+    value = "auth@docker,ratelimit@docker"
+  }
+  labels {
+    label = "traefik.http.routers.prometheus.middlewares"
+    value = "ratelimit@docker"
+  }
+  labels {
+    label = "traefik.http.routers.dashboard.middlewares"
+    value = "auth@docker,ratelimit@docker"
   }
   labels {
     label = "traefik.http.routers.api.service"
     value = "api@internal"
   }
   labels {
-    label = "traefik.http.routers.dashboard.middlewares"
-    value = "auth@docker"
-  }
-  labels {
-    label = "traefik.http.routers.dashboard.rule"
-    value = "Host(`${var.internal_domain_name}`) && (PathPrefix(`/dashboard`))"
+    label = "traefik.http.routers.prometheus.service"
+    value = "prometheus@internal"
   }
   labels {
     label = "traefik.http.routers.dashboard.service"
     value = "api@internal"
+  }
+  labels {
+    label = "traefik.http.routers.api.rule"
+    value = "Host(`${var.internal_domain_name}`) && (PathPrefix(`/api`))"
+  }
+  labels {
+    label = "traefik.http.routers.prometheus.rule"
+    value = "PathPrefix(`/metrics`)"
+  }
+  labels {
+    label = "traefik.http.routers.dashboard.rule"
+    value = "Host(`${var.internal_domain_name}`) && (PathPrefix(`/dashboard`))"
   }
 }
 
