@@ -24,10 +24,14 @@ resource "docker_container" "nextcloud" {
   image   = docker_image.nextcloud.name
   restart = "unless-stopped"
   env = [
-    "SQLITE_DATABASE=nextcloud",
+    "POSTGRES_DB=nextcloud",
+    "POSTGRES_USER=nextcloud",
+    "POSTGRES_PASSWORD=${random_password.postgres_nextcloud_password.result}",
+    "POSTGRES_HOST=postgres",
     "NEXTCLOUD_ADMIN_USER=${var.nextcloud_admin_username}",
     "NEXTCLOUD_ADMIN_PASSWORD=${random_password.nextcloud_password.result}",
-    "NEXTCLOUD_TRUSTED_DOMAINS=${var.duckdns_domain_name}"
+    "NEXTCLOUD_TRUSTED_DOMAINS=${var.duckdns_domain_name}",
+    "TRUSTED_PROXIES=172.19.0.0/24"
   ]
 
   mounts {
@@ -38,6 +42,7 @@ resource "docker_container" "nextcloud" {
 
   networks_advanced {
     name = docker_network.public_network.name
+
   }
 
   ipc_mode = "private"
