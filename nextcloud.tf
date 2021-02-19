@@ -19,6 +19,25 @@ output "nextcloud_password" {
   value = random_password.nextcloud_password.result
 }
 
+resource "docker_container" "nextcloud_cron" {
+  name       = "nextcloud-cron"
+  image      = docker_image.nextcloud.name
+  restart    = "unless-stopped"
+  entrypoint = ["/cron.sh"]
+
+  mounts {
+    target = "/var/www/html"
+    type   = "volume"
+    source = docker_volume.nextcloud_data.name
+  }
+
+  networks_advanced {
+    name = docker_network.public_network.name
+  }
+
+  ipc_mode = "private"
+}
+
 resource "docker_container" "nextcloud" {
   name    = "nextcloud"
   image   = docker_image.nextcloud.name
@@ -31,7 +50,9 @@ resource "docker_container" "nextcloud" {
     "NEXTCLOUD_ADMIN_USER=${var.nextcloud_admin_username}",
     "NEXTCLOUD_ADMIN_PASSWORD=${random_password.nextcloud_password.result}",
     "NEXTCLOUD_TRUSTED_DOMAINS=${var.duckdns_domain_name}",
-    "TRUSTED_PROXIES=172.19.0.0/24"
+    "TRUSTED_PROXIES=172.19.0.0/24",
+    "PHP_INI_MEMORY_LIMIT=${var.nextloud_mem_limit}",
+    "PHP_UPLOAD_LIMIT=${var.nextloud_upload_limit}"
   ]
 
   mounts {
@@ -42,7 +63,6 @@ resource "docker_container" "nextcloud" {
 
   networks_advanced {
     name = docker_network.public_network.name
-
   }
 
   ipc_mode = "private"

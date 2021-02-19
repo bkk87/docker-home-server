@@ -6,6 +6,7 @@ variable "docker_connect_hostname" {
 }
 
 # pihole
+
 variable "pihole_env_list" {
   type = list(string)
   default = [
@@ -63,4 +64,16 @@ variable "nextcloud_admin_username" {
   type    = string
   default = "admin"
 }
+
+variable "nextloud_mem_limit" {
+  type    = string
+  default = "2G"
+}
+
+variable "nextloud_upload_limit" {
+  type    = string
+  default = "10G"
+}
+
+
 
