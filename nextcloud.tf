@@ -20,6 +20,7 @@ output "nextcloud_password" {
 }
 
 resource "docker_container" "nextcloud_cron" {
+  depends_on = [docker_container.nextcloud]
   name       = "nextcloud-cron"
   image      = docker_image.nextcloud.name
   restart    = "unless-stopped"
@@ -39,9 +40,11 @@ resource "docker_container" "nextcloud_cron" {
 }
 
 resource "docker_container" "nextcloud" {
-  name    = "nextcloud"
-  image   = docker_image.nextcloud.name
-  restart = "unless-stopped"
+  depends_on = [docker_container.postgres, docker_container.redis]
+  name       = "nextcloud"
+  image      = docker_image.nextcloud.name
+  restart    = "unless-stopped"
+  dns        = ["1.1.1.1"]
   env = [
     "POSTGRES_DB=nextcloud",
     "POSTGRES_USER=nextcloud",
@@ -51,8 +54,9 @@ resource "docker_container" "nextcloud" {
     "NEXTCLOUD_ADMIN_PASSWORD=${random_password.nextcloud_password.result}",
     "NEXTCLOUD_TRUSTED_DOMAINS=${var.duckdns_domain_name}",
     "TRUSTED_PROXIES=172.19.0.0/24",
-    "PHP_INI_MEMORY_LIMIT=${var.nextloud_mem_limit}",
-    "PHP_UPLOAD_LIMIT=${var.nextloud_upload_limit}"
+    "PHP_MEMORY_LIMIT=${var.nextloud_mem_limit}",
+    "PHP_UPLOAD_LIMIT=${var.nextloud_upload_limit}",
+    "REDIS_HOST=redis"
   ]
 
   mounts {

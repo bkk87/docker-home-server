@@ -26,7 +26,7 @@ resource "docker_container" "grafana" {
     "GF_AUTH_ANONYMOUS_ORG_NAME=Main Org.",
     "GF_USERS_ALLOW_SIGN_UP=false",
     "GF_AUTH_ANONYMOUS_ORG_ROLE=Admin",
-    "GF_INSTALL_PLUGINS=grafana-piechart-panel"
+    #"GF_INSTALL_PLUGINS=grafana-piechart-panel"
   ]
   restart     = "unless-stopped"
   start       = true

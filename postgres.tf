@@ -24,6 +24,13 @@ output "postgres_password" {
 output "postgres_nextcloud_password" {
   value = random_password.postgres_nextcloud_password.result
 }
+
+# manually run: 
+#CREATE USER nextcloud WITH PASSWORD '<postgres_nextcloud_password>';
+#CREATE DATABASE nextcloud TEMPLATE template0 ENCODING 'UNICODE';
+#ALTER DATABASE nextcloud OWNER TO nextcloud;
+#GRANT ALL PRIVILEGES ON DATABASE nextcloud TO nextcloud;
+
 resource "docker_container" "postgres" {
   name  = "postgres"
   image = docker_image.postgres.name

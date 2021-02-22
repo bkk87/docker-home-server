@@ -67,7 +67,7 @@ variable "nextcloud_admin_username" {
 
 variable "nextloud_mem_limit" {
   type    = string
-  default = "2G"
+  default = "1G"
 }
 
 variable "nextloud_upload_limit" {
