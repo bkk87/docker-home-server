@@ -140,5 +140,21 @@ resource "docker_container" "nextcloud" {
     label = "traefik.http.middlewares.nc-header.headers.customFrameOptionsValue"
     value = "SAMEORIGIN"
   }
+  labels {
+    label = "traefik.http.middlewares.nc-header.headers.stsSeconds"
+    value = "31536000"
+  }
+  labels {
+    label = "traefik.http.middlewares.nc-header.headers.forceSTSHeader"
+    value = "true"
+  }
+  labels {
+    label = "traefik.http.middlewares.nc-header.headers.stsPreload"
+    value = "true"
+  }
+  labels {
+    label = "traefik.http.middlewares.nc-header.headers.stsIncludeSubdomains"
+    value = "true"
+  }
 }
 
