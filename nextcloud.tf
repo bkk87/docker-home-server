@@ -19,25 +19,29 @@ output "nextcloud_password" {
   value = random_password.nextcloud_password.result
 }
 
-resource "docker_container" "nextcloud_cron" {
-  depends_on = [docker_container.nextcloud]
-  name       = "nextcloud-cron"
-  image      = docker_image.nextcloud.name
-  restart    = "unless-stopped"
-  entrypoint = ["/cron.sh"]
+# recommendation is to not run cron is/as a container but instead add the following lines on your docker host system
+# 0 0 * * * docker exec --user www-data nextcloud php occ preview:pre-generate
+# */5 * * * * docker exec --user www-data nextcloud php -f /var/www/html/cron.php
+#
+# resource "docker_container" "nextcloud_cron" {
+#   depends_on = [docker_container.nextcloud]
+#   name       = "nextcloud-cron"
+#   image      = docker_image.nextcloud.name
+#   restart    = "unless-stopped"
+#   entrypoint = ["/cron.sh"]
 
-  mounts {
-    target = "/var/www/html"
-    type   = "volume"
-    source = docker_volume.nextcloud_data.name
-  }
+#   mounts {
+#     target = "/var/www/html"
+#     type   = "volume"
+#     source = docker_volume.nextcloud_data.name
+#   }
 
-  networks_advanced {
-    name = docker_network.public_network.name
-  }
+#   networks_advanced {
+#     name = docker_network.public_network.name
+#   }
 
-  ipc_mode = "private"
-}
+#   ipc_mode = "private"
+# }
 
 resource "docker_container" "nextcloud" {
   depends_on = [docker_container.postgres, docker_container.redis]
