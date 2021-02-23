@@ -4,7 +4,7 @@ Using the Docker provider for Terraform to deploy Docker Infrastructure (Images,
 
 ![](images/docker-terraform-raspi-lab.png)
 
-In order to minimize disk read/write activity, tmpfs devices are used where data does not necessarily need to be persisted (e.g. Prometheus metrics).
+In order to minimize disk read/write activity, tmpfs devices are used where data does not necessarily needs to be persisted (e.g. Prometheus metrics).
 
 Other helpful projects:  
 * <https://github.com/bobafetthotmail/folder2ram> to further reduce disk read/writes of the OS
