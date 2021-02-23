@@ -1,12 +1,12 @@
-# (Raspberry Pi) Home Server Setup as Code
+# (Raspberry Pi) Docker Home Server Setup as Code
 
 Using the Docker provider for Terraform to deploy Docker Infrastructure (Images, Containers, Networks, Volumes).
 
 ![](images/docker-terraform-raspi-lab.png)
 
-Because my/the server is using a microSD card one focus is to minimize disk read/write activity. Therefore, a lot of tmpfs devices are used where possible.
+In order to minimize disk read/write activity, tmpfs devices are used where data does not necessarily need to be persisted (e.g. Prometheus metrics).
 
-I am also using 
+Other helpful projects:  
 * <https://github.com/bobafetthotmail/folder2ram> to further reduce disk read/writes of the OS
 * <https://github.com/cloudalchemy/ansible-node-exporter> to install the Node Exporter for gettng Prometheus Metrics
 
