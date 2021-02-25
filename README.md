@@ -12,6 +12,6 @@ Other helpful projects:
 
 ## Instructions
 
-Remove all `.tf` file which you don't need. Also remove the corresponding variables in `variables.tf`. A lot of variables are provided with default values. Check and adjust the `examples.tfvars` file if you want to change some parameters.
+Remove all `.tf` files which you don't need. Also remove the corresponding variables in `variables.tf`. A lot of variables are provided with default values. Check and adjust the `examples.tfvars` file if you want to change some parameters.
 
 Then, run `terraform init` and `terraform apply`.
