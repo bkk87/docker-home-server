@@ -19,10 +19,11 @@ output "nextcloud_password" {
   value = random_password.nextcloud_password.result
 }
 
-# recommendation is to not run cron is/as a container but instead add the following lines on your docker host system
+# the recommendation is to not run cron in/as a container but to run cron on your host system by adding the following lines to your cron tab:
 # 0 0 * * * docker exec --user www-data nextcloud php occ preview:pre-generate
 # */5 * * * * docker exec --user www-data nextcloud php -f /var/www/html/cron.php
 #
+# in case this is not possible for you, here is an alternative based on the nextcloud image itself:
 # resource "docker_container" "nextcloud_cron" {
 #   depends_on = [docker_container.nextcloud]
 #   name       = "nextcloud-cron"
