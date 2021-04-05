@@ -9,6 +9,7 @@ resource "docker_image" "node_red" {
 resource "docker_container" "node_red" {
   name        = "node_red"
   image       = docker_image.node_red.name
+  memory      = var.node_red_container_memory_limit
   restart     = "unless-stopped"
   must_run    = false
   start       = true

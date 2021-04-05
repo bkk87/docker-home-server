@@ -22,6 +22,7 @@ resource "docker_volume" "pihole" {
 resource "docker_container" "pihole" {
   name     = "pihole"
   image    = docker_image.pihole.name
+  memory   = var.pihole_container_memory_limit
   restart  = "unless-stopped"
   start    = true
   dns      = ["1.1.1.1", "127.0.0.1"]

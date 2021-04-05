@@ -23,6 +23,10 @@ variable "pihole_env_list" {
   ]
   description = "list of pihole ENVs"
 }
+variable "pihole_container_memory_limit" {
+  type    = number
+  default = 512
+}
 
 # prometheus
 
@@ -51,6 +55,11 @@ variable "path_mosquitto_conf" {
   default     = "/home/pi/mosquitto/mosquitto.conf"
   description = "path to the file which is used as a volume bind"
 }
+variable "mosquitto_container_memory_limit" {
+  type    = number
+  default = 128
+}
+
 
 # traefik
 
@@ -117,3 +126,25 @@ variable "portainer_container_memory_limit" {
   type    = number
   default = 128
 }
+
+# homeassistant
+
+variable "homeassistant_container_memory_limit" {
+  type    = number
+  default = 512
+}
+
+# syncthing
+
+variable "syncthing_container_memory_limit" {
+  type    = number
+  default = 512
+}
+
+# node_red
+
+variable "node_red_container_memory_limit" {
+  type    = number
+  default = 512
+}
+

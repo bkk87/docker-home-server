@@ -43,6 +43,7 @@ resource "docker_volume" "syncthing_data_music" {
 resource "docker_container" "syncthing" {
   name    = "syncthing"
   image   = docker_image.syncthing.name
+  memory  = var.syncthing_container_memory_limit
   restart = "unless-stopped"
   start   = true
   env     = ["STGUIADDRESS=0.0.0.0:8384"]

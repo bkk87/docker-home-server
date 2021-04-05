@@ -19,6 +19,7 @@ resource "docker_volume" "mosquitto_data" {
 resource "docker_container" "mosquitto" {
   name     = "mosquitto"
   image    = docker_image.mosquitto.name
+  memory   = var.mosquitto_container_memory_limit
   restart  = "unless-stopped"
   must_run = false
   start    = true
