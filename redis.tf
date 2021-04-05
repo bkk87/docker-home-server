@@ -1,5 +1,5 @@
 data "docker_registry_image" "redis" {
-  name = "redis:rc"
+  name = "redis:buster"
 }
 resource "docker_image" "redis" {
   name         = data.docker_registry_image.redis.name
@@ -9,6 +9,7 @@ resource "docker_image" "redis" {
 resource "docker_container" "redis" {
   name    = "redis"
   image   = docker_image.redis.name
+  memory = var.redis_container_memory_limit
   restart = "unless-stopped"
   start   = true
   networks_advanced {

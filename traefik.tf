@@ -14,6 +14,7 @@ resource "docker_volume" "traefik_data_letsencrypt" {
 resource "docker_container" "traefik" {
   name     = "traefik"
   image    = docker_image.traefik.name
+  memory   = var.traefik_container_memory_limit
   restart  = "unless-stopped"
   must_run = false
   start    = true

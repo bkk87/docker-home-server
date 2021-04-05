@@ -14,6 +14,7 @@ resource "docker_volume" "grafana" {
 resource "docker_container" "grafana" {
   name  = "grafana"
   image = docker_image.grafana.name
+  memory = var.grafana_container_memory_limit
   env = [
     "GF_PATHS_CONFIG=/etc/grafana/grafana.ini",
     "GF_PATHS_DATA=/var/lib/grafana",

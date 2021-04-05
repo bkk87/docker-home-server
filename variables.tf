@@ -19,7 +19,8 @@ variable "pihole_env_list" {
     "REV_SERVER_DOMAIN=fritz.box",
     "REV_SERVER_TARGET=192.168.178.1",
     "REV_SERVER_CIDR=192.168.178.0/24",
-  "VIRTUAL_HOST=xxxxxxxxxx.fritz.box"]
+    "VIRTUAL_HOST=xxxxxxxxxx.fritz.box"
+  ]
   description = "list of pihole ENVs"
 }
 
@@ -29,6 +30,18 @@ variable "path_prometheus_yml" {
   type        = string
   default     = "/home/pi/prometheus/prometheus.yml"
   description = "path to the file which is used as a volume bind"
+}
+
+variable "prometheus_container_memory_limit" {
+  type    = number
+  default = 128
+}
+
+# grafana
+
+variable "grafana_container_memory_limit" {
+  type    = number
+  default = 256
 }
 
 # mosquitto
@@ -57,6 +70,10 @@ variable "letsencrypt_email" {
   type    = string
   default = "myemail@domain.com"
 }
+variable "traefik_container_memory_limit" {
+  type    = number
+  default = 128
+}
 
 # nextcloud
 
@@ -65,15 +82,38 @@ variable "nextcloud_admin_username" {
   default = "admin"
 }
 
-variable "nextloud_mem_limit" {
+variable "nextloud_php_mem_limit" {
   type    = string
   default = "1G"
 }
 
-variable "nextloud_upload_limit" {
+variable "nextloud_php_upload_limit" {
   type    = string
   default = "10G"
 }
 
+variable "nextloud_container_memory_limit" {
+  type    = number
+  default = 1500
+}
 
+# postgres
 
+variable "postgres_container_memory_limit" {
+  type    = number
+  default = 512
+}
+
+# redis
+
+variable "redis_container_memory_limit" {
+  type    = number
+  default = 128
+}
+
+# portainer
+
+variable "portainer_container_memory_limit" {
+  type    = number
+  default = 128
+}

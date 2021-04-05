@@ -32,8 +32,9 @@ output "postgres_nextcloud_password" {
 #GRANT ALL PRIVILEGES ON DATABASE nextcloud TO nextcloud;
 
 resource "docker_container" "postgres" {
-  name  = "postgres"
-  image = docker_image.postgres.name
+  name   = "postgres"
+  image  = docker_image.postgres.name
+  memory = var.postgres_container_memory_limit
   env = [
     "POSTGRES_PASSWORD=${random_password.postgres_password.result}"
   ]

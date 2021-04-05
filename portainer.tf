@@ -14,6 +14,7 @@ resource "docker_volume" "portainer_data" {
 resource "docker_container" "portainer" {
   name        = "portainer"
   image       = docker_image.portainer.name
+  memory      = var.portainer_container_memory_limit
   restart     = "unless-stopped"
   start       = true
   working_dir = "/"

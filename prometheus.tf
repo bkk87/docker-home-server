@@ -14,13 +14,14 @@ resource "docker_volume" "prometheus_data" {
   driver_opts = {
     "type"   = "tmpfs",
     "device" = "tmpfs",
-    "o"      = "size=100m"
+    "o"      = "size=512m"
   }
 }
 
 resource "docker_container" "prometheus" {
   name        = "prometheus"
   image       = docker_image.prometheus.name
+  memory      = var.prometheus_container_memory_limit
   restart     = "unless-stopped"
   start       = true
   user        = "nobody"
