@@ -45,7 +45,7 @@ variable "prometheus_container_memory_limit" {
 
 variable "grafana_container_memory_limit" {
   type    = number
-  default = 256
+  default = 128
 }
 
 # mosquitto
@@ -93,31 +93,31 @@ variable "nextcloud_admin_username" {
 
 variable "nextloud_php_mem_limit" {
   type    = string
-  default = "1G"
+  default = "512M"
 }
 
 variable "nextloud_php_upload_limit" {
   type    = string
-  default = "10G"
+  default = "20G"
 }
 
 variable "nextloud_container_memory_limit" {
   type    = number
-  default = 1500
+  default = 792
 }
 
 # postgres
 
 variable "postgres_container_memory_limit" {
   type    = number
-  default = 512
+  default = 128
 }
 
 # redis
 
 variable "redis_container_memory_limit" {
   type    = number
-  default = 128
+  default = 32
 }
 
 # portainer
@@ -146,5 +146,12 @@ variable "syncthing_container_memory_limit" {
 variable "node_red_container_memory_limit" {
   type    = number
   default = 512
+}
+
+# watchtower
+
+variable "watchtower_container_memory_limit" {
+  type    = number
+  default = 32
 }
 
