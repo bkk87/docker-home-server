@@ -37,8 +37,11 @@ variable "path_prometheus_yml" {
 }
 
 variable "prometheus_container_memory_limit" {
-  type    = number
-  default = 128
+  type = number
+  # prometheus has a memory problem: https://github.com/prometheus/prometheus/issues/3005
+  # too low values will OOM kill the container
+  # as we use a tmpfs for storing our metrics, this means all metrics will also be gone
+  default = 768
 }
 
 # grafana
