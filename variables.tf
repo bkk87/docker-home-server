@@ -113,7 +113,7 @@ variable "nextloud_container_memory_limit" {
 
 variable "postgres_container_memory_limit" {
   type    = number
-  default = 128
+  default = 256
 }
 
 # redis

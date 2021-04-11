@@ -10,6 +10,16 @@ resource "docker_volume" "postgres" {
   name   = "postgres_data"
   driver = "local"
 }
+resource "docker_volume" "postgres_tmp" {
+  name   = "postgres_data_tmp"
+  driver = "local"
+  driver_opts = {
+    "type"   = "tmpfs",
+    "device" = "tmpfs",
+    "o"      = "size=32m"
+  }
+}
+
 resource "random_password" "postgres_password" {
   length  = 20
   special = false
@@ -31,6 +41,8 @@ output "postgres_nextcloud_password" {
 #ALTER DATABASE nextcloud OWNER TO nextcloud;
 #GRANT ALL PRIVILEGES ON DATABASE nextcloud TO nextcloud;
 
+# in postgresql.conf set stats_temp_directory = '/var/lib/postgresql/tmp' to reduce disk i/o
+
 resource "docker_container" "postgres" {
   name   = "postgres"
   image  = docker_image.postgres.name
@@ -44,6 +56,12 @@ resource "docker_container" "postgres" {
     target    = "/var/lib/postgresql/data"
     type      = "volume"
     source    = docker_volume.postgres.name
+    read_only = false
+  }
+  mounts {
+    target    = "/var/lib/postgresql/tmp"
+    type      = "volume"
+    source    = docker_volume.postgres_tmp.name
     read_only = false
   }
   ports {
