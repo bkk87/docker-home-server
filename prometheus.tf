@@ -16,7 +16,7 @@ resource "docker_volume" "prometheus_data" {
     "device" = "tmpfs",
     # default prometheus metrics retention is 15 days 
     # this is enough storage for node_exporter and traefik metrics
-    "o" = "size=384m"
+    "o" = "size=1024m"
   }
 }
 

@@ -29,10 +29,12 @@ resource "random_password" "postgres_nextcloud_password" {
   special = false
 }
 output "postgres_password" {
-  value = random_password.postgres_password.result
+  value     = random_password.postgres_password.result
+  sensitive = true
 }
 output "postgres_nextcloud_password" {
-  value = random_password.postgres_nextcloud_password.result
+  value     = random_password.postgres_nextcloud_password.result
+  sensitive = true
 }
 
 # manually run: 

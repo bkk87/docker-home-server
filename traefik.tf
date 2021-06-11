@@ -87,7 +87,7 @@ resource "docker_container" "traefik" {
   }
   labels {
     label = "traefik.http.middlewares.ratelimit.ratelimit.burst"
-    value = "50"
+    value = "100"
   }
   labels {
     label = "traefik.http.routers.api.entrypoints"

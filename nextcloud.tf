@@ -16,7 +16,8 @@ resource "random_password" "nextcloud_password" {
   special = false
 }
 output "nextcloud_password" {
-  value = random_password.nextcloud_password.result
+  value     = random_password.nextcloud_password.result
+  sensitive = true
 }
 
 # the recommendation is to not run cron in/as a container but to run cron on your host system by adding the following lines to your cron tab:
@@ -58,12 +59,13 @@ resource "docker_container" "nextcloud" {
     "POSTGRES_HOST=postgres",
     "NEXTCLOUD_ADMIN_USER=${var.nextcloud_admin_username}",
     "NEXTCLOUD_ADMIN_PASSWORD=${random_password.nextcloud_password.result}",
-    "NEXTCLOUD_TRUSTED_DOMAINS=${var.duckdns_domain_name}",
+    "NEXTCLOUD_TRUSTED_DOMAINS=${var.domain_name1} ${var.domain_name2}",
     "TRUSTED_PROXIES=172.19.0.0/24",
     "PHP_MEMORY_LIMIT=${var.nextloud_php_mem_limit}",
     "PHP_UPLOAD_LIMIT=${var.nextloud_php_upload_limit}",
     "REDIS_HOST=redis"
   ]
+
   mounts {
     target = "/var/www/html"
     type   = "volume"
@@ -95,7 +97,7 @@ resource "docker_container" "nextcloud" {
   }
   labels {
     label = "traefik.http.routers.web-secure.rule"
-    value = "Host(`${var.duckdns_domain_name}`)"
+    value = "Host(`${var.domain_name1}`) || Host(`${var.domain_name2}`)"
   }
   labels {
     label = "traefik.http.routers.web-secure.service"
@@ -119,7 +121,7 @@ resource "docker_container" "nextcloud" {
   }
   labels {
     label = "traefik.http.routers.web.rule"
-    value = "Host(`${var.duckdns_domain_name}`)"
+    value = "Host(`${var.domain_name1}`) || Host(`${var.domain_name2}`)"
   }
   labels {
     label = "traefik.http.middlewares.https-redirect.redirectscheme.scheme"

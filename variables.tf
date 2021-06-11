@@ -74,21 +74,25 @@ variable "internal_domain_name" {
   type    = string
   default = "myserver.fritz.box"
 }
-variable "duckdns_domain_name" {
-  type    = string
-  default = "myserver.duckdns.org"
-}
 variable "letsencrypt_email" {
   type    = string
   default = "myemail@domain.com"
 }
 variable "traefik_container_memory_limit" {
   type    = number
-  default = 128
+  default = 256
 }
 
 # nextcloud
 
+variable "domain_name1" {
+  type    = string
+  default = "myserver.duckdns.org"
+}
+variable "domain_name2" {
+  type    = string
+  default = "myserver2.duckdns.org"
+}
 variable "nextcloud_admin_username" {
   type    = string
   default = "admin"
@@ -96,7 +100,7 @@ variable "nextcloud_admin_username" {
 
 variable "nextloud_php_mem_limit" {
   type    = string
-  default = "512M"
+  default = "1024M"
 }
 
 variable "nextloud_php_upload_limit" {
@@ -106,21 +110,21 @@ variable "nextloud_php_upload_limit" {
 
 variable "nextloud_container_memory_limit" {
   type    = number
-  default = 792
+  default = 1256
 }
 
 # postgres
 
 variable "postgres_container_memory_limit" {
   type    = number
-  default = 256
+  default = 512
 }
 
 # redis
 
 variable "redis_container_memory_limit" {
   type    = number
-  default = 32
+  default = 64
 }
 
 # portainer
