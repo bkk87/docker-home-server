@@ -48,11 +48,11 @@ resource "docker_container" "prometheus" {
   }
 
   networks_advanced {
-    name = docker_network.private_network.name
+    name = docker_network.private_with_outbound.name
   }
 
   networks_advanced {
-    name = docker_network.public_network.name
+    name = docker_network.public_without_outbound.name
   }
   ipc_mode = "private"
 

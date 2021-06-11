@@ -39,7 +39,7 @@ output "nextcloud_password" {
 #   }
 
 #   networks_advanced {
-#     name = docker_network.public_network.name
+#     name = docker_network.public_without_outbound.name
 #   }
 
 #   ipc_mode = "private"
@@ -73,7 +73,10 @@ resource "docker_container" "nextcloud" {
   }
 
   networks_advanced {
-    name = docker_network.public_network.name
+    name = docker_network.public_without_outbound.name
+  }
+  networks_advanced {
+    name = docker_network.public_with_outbound.name
   }
 
   ipc_mode = "private"

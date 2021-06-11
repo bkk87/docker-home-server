@@ -12,8 +12,8 @@ resource "docker_volume" "grafana" {
 }
 
 resource "docker_container" "grafana" {
-  name  = "grafana"
-  image = docker_image.grafana.name
+  name   = "grafana"
+  image  = docker_image.grafana.name
   memory = var.grafana_container_memory_limit
   env = [
     "GF_PATHS_CONFIG=/etc/grafana/grafana.ini",
@@ -46,7 +46,7 @@ resource "docker_container" "grafana" {
     protocol = "tcp"
   }
   networks_advanced {
-    name = docker_network.private_network.name
+    name = docker_network.private_with_outbound.name
   }
   ipc_mode = "private"
 }

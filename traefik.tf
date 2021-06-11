@@ -29,7 +29,7 @@ resource "docker_container" "traefik" {
     "--metrics.prometheus=true",
     "--metrics.prometheus.manualrouting=true",
     "--providers.docker",
-    "--providers.docker.network=${docker_network.public_network.name}",
+    "--providers.docker.network=${docker_network.public_without_outbound.name}",
     "--log.level=DEBUG",
     "--entryPoints.http.address=:80",
     "--entryPoints.https.address=:443",
@@ -68,7 +68,7 @@ resource "docker_container" "traefik" {
   }
 
   networks_advanced {
-    name = docker_network.public_network.name
+    name = docker_network.public_without_outbound.name
   }
 
   ipc_mode = "private"

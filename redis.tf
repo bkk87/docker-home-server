@@ -28,7 +28,7 @@ resource "docker_container" "redis" {
     source = docker_volume.redis_data.name
   }
   networks_advanced {
-    name = docker_network.public_network.name
+    name = docker_network.public_without_outbound.name
   }
   ipc_mode = "private"
 }

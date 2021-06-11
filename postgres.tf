@@ -73,7 +73,7 @@ resource "docker_container" "postgres" {
     protocol = "tcp"
   }
   networks_advanced {
-    name = docker_network.public_network.name
+    name = docker_network.public_without_outbound.name
   }
   ipc_mode = "private"
 }

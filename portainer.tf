@@ -45,7 +45,7 @@ resource "docker_container" "portainer" {
   }
 
   networks_advanced {
-    name = docker_network.private_network.name
+    name = docker_network.private_with_outbound.name
   }
 
   ipc_mode = "private"
