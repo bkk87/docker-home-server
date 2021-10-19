@@ -29,12 +29,6 @@ resource "docker_container" "watchtower" {
     type      = "bind"
     read_only = false
   }
-  ports {
-    internal = 8080
-    external = 8080
-    ip       = "0.0.0.0"
-    protocol = "tcp"
-  }
   networks_advanced {
     name = docker_network.private_with_outbound.name
   }

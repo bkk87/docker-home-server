@@ -1,5 +1,5 @@
 data "docker_registry_image" "redis" {
-  name = "redis:buster"
+  name = "redis:6"
 }
 resource "docker_image" "redis" {
   name         = data.docker_registry_image.redis.name
@@ -28,7 +28,7 @@ resource "docker_container" "redis" {
     source = docker_volume.redis_data.name
   }
   networks_advanced {
-    name = docker_network.public_without_outbound.name
+    name = docker_network.private_without_outbound.name
   }
   ipc_mode = "private"
 }

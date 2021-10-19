@@ -110,7 +110,7 @@ variable "nextloud_php_upload_limit" {
 
 variable "nextloud_container_memory_limit" {
   type    = number
-  default = 1256
+  default = 2048
 }
 
 # postgres
@@ -161,4 +161,12 @@ variable "watchtower_container_memory_limit" {
   type    = number
   default = 32
 }
+
+# gerbera
+
+variable "gerbera_container_memory_limit" {
+  type    = number
+  default = 512
+}
+
 

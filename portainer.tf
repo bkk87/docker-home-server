@@ -31,13 +31,6 @@ resource "docker_container" "portainer" {
   }
 
   ports {
-    internal = 8000
-    external = 8000
-    ip       = "0.0.0.0"
-    protocol = "tcp"
-  }
-
-  ports {
     internal = 9000
     external = 9000
     ip       = "0.0.0.0"
@@ -45,7 +38,7 @@ resource "docker_container" "portainer" {
   }
 
   networks_advanced {
-    name = docker_network.private_with_outbound.name
+    name = docker_network.private_without_outbound.name
   }
 
   ipc_mode = "private"

@@ -66,14 +66,8 @@ resource "docker_container" "postgres" {
     source    = docker_volume.postgres_tmp.name
     read_only = false
   }
-  ports {
-    internal = 5432
-    external = 5432
-    ip       = "0.0.0.0"
-    protocol = "tcp"
-  }
   networks_advanced {
-    name = docker_network.public_without_outbound.name
+    name = docker_network.private_without_outbound.name
   }
   ipc_mode = "private"
 }

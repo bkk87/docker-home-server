@@ -1,7 +1,7 @@
 
 
 data "docker_registry_image" "prometheus" {
-  name = "prom/prometheus:latest"
+  name = "prom/prometheus:main"
 }
 resource "docker_image" "prometheus" {
   name         = data.docker_registry_image.prometheus.name
@@ -16,7 +16,7 @@ resource "docker_volume" "prometheus_data" {
     "device" = "tmpfs",
     # default prometheus metrics retention is 15 days 
     # this is enough storage for node_exporter and traefik metrics
-    "o" = "size=1024m"
+    "o" = "size=256m"
   }
 }
 
@@ -52,7 +52,11 @@ resource "docker_container" "prometheus" {
   }
 
   networks_advanced {
-    name = docker_network.public_without_outbound.name
+    name = docker_network.private_without_outbound.name
+  }
+
+  networks_advanced {
+    name = docker_network.public_with_outbound.name
   }
   ipc_mode = "private"
 
