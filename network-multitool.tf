@@ -13,7 +13,7 @@ resource "docker_container" "network_multitool" {
   must_run = false
   start    = true
   networks_advanced {
-    name = docker_network.private_without_outbound.name
+    name = docker_network.private_with_outbound.name
   }
   ipc_mode = "private"
 }

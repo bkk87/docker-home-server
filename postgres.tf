@@ -67,7 +67,7 @@ resource "docker_container" "postgres" {
     read_only = false
   }
   networks_advanced {
-    name = docker_network.private_without_outbound.name
+    name = docker_network.private_with_outbound.name
   }
   ipc_mode = "private"
 }

@@ -73,8 +73,9 @@ resource "docker_container" "nextcloud" {
   }
 
   networks_advanced {
-    name = docker_network.private_without_outbound.name
+    name = docker_network.private_with_outbound.name
   }
+
   networks_advanced {
     name = docker_network.public_with_outbound.name
   }
