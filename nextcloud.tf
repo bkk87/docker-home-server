@@ -21,9 +21,10 @@ output "nextcloud_password" {
 }
 
 # the recommendation is to not run cron in/as a container but to run cron on your host system by adding the following lines to your cron tab:
-# 0 0 * * * docker exec --user www-data nextcloud php occ preview:pre-generate
-# */5 * * * * docker exec --user www-data nextcloud php -f /var/www/html/cron.php
-#
+# */5 * * * * docker exec --user www-data nextcloud php -f /var/www/html/cron.php    
+# */30 07-23 * * * docker exec --user www-data nextcloud php occ preview:pre-generate
+# 0 5 1 * * docker exec --user www-data nextcloud php occ files:scan --all
+# 
 # in case this is not possible for you, here is an alternative based on the nextcloud image itself:
 # resource "docker_container" "nextcloud_cron" {
 #   depends_on = [docker_container.nextcloud]
@@ -63,7 +64,8 @@ resource "docker_container" "nextcloud" {
     "TRUSTED_PROXIES=172.19.0.0/24",
     "PHP_MEMORY_LIMIT=${var.nextloud_php_mem_limit}",
     "PHP_UPLOAD_LIMIT=${var.nextloud_php_upload_limit}",
-    "REDIS_HOST=redis"
+    "REDIS_HOST=redis",
+    "OVERWRITEPROTOCOL=https"
   ]
 
   mounts {
